@@ -9,10 +9,12 @@
 * Copyright Notice
 */
 
+#include "Module.h"
 #include "Student.h"
 #include <string>
 #include <iostream>
 #include <regex>
+#include <vector>
 
 Student::Student() {
 
@@ -23,7 +25,7 @@ Student::Student(std::string name)
 }
 
 Student::Student(std::string name, std::string regID, std::string course, int year, int modMark1, int modMark2, int modMark3)
-	: name_{ name }, regID_{ regID }, course_{ course }, year_{ year }, modMark1_{ modMark1 }, modMark2_{ modMark2 }, modMark3_{ modMark3 } {
+	: name_{ name }, regID_{ regID }, course_{ course }, year_{ year } {
 
 }
 
@@ -71,40 +73,47 @@ int Student::getYear() const {
 	return year_;
 }
 
-void Student::setModMark1(int modMark1) {
-	modMark1_ = modMark1;
+void Student::addModule(std::string t, std::string c, int cp, int m) {
+	Module mod(t, c, cp, m);
+	moduleMarks_.push_back(mod);
 }
 
-int Student::getModMark1() const {
-	return modMark1_;
+void Student::updateModule(std::string c, Module m) {
+
+	for (int i = 0; i < moduleMarks_.size(); i++) {
+		if (c == moduleMarks_[i].getCode()) {
+			moduleMarks_[i] = m;
+		}
+	}
+
 }
 
-void Student::setModMark2(int modMark2) {
-	modMark2_ = modMark2;
-}
+void Student::deleteModule(std::string c) {
+	int loops = 0;
 
-int Student::getModMark2() const {
-	return modMark2_;
-}
+	for (int i = 0; i < moduleMarks_.size(); i++) {
+		if (c == moduleMarks_[i].getCode()){
+			moduleMarks_.erase(moduleMarks_.begin() + i);
+			loops++;
+		}
+	}
 
-void Student::setModMark3(int modMark3) {
-	modMark3_ = modMark3;
-}
-
-int Student::getModMark3() const {
-	return modMark3_;
+	if (loops != 0) {
+		std::cout << "\n" << loops << " modules deleted.";
+	}
+	else {
+		std::cout << "\nNo modules deleted.";
+	}
 }
 
 void Student::toString() const {
-	std::cout << "Student Name: " << Student::name_ << "\nStudent ID: " << Student::regID_ << "\nCourse: " << Student::course_ << "\nYear of Study: " << Student::year_
-		<< "\nModule 1 Mark: " << Student::modMark1_ << "\nModule 2 Mark: " << Student::modMark2_ << "\nModule 3 Mark: " << Student::modMark3_;
+	std::cout << "Student Name: " << Student::name_ << "\nStudent ID: " << Student::regID_ << "\nCourse: " << Student::course_ << "\nYear of Study: " << Student::year_;
 }
 
 std::string Student::caluclateClassification() const {
 	double classification{ 0.0 };
 	int sum{ 0 };
 
-	sum = modMark1_ + modMark2_ + modMark3_;
 	classification = sum / 3;
 
 	if (classification <= 39.0)

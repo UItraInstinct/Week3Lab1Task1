@@ -11,7 +11,9 @@
 
 #pragma once
 
+#include "Module.h"
 #include <string>
+#include <vector>
 
 class Student {
 	public:
@@ -26,13 +28,13 @@ class Student {
 		std::string getCourse() const;
 		void setYear(int year);
 		int getYear() const;
-		void setModMark1(int modMark1);
-		int getModMark1() const;
-		void setModMark2(int modMark2);
-		int getModMark2() const;
-		void setModMark3(int modMark3);
-		int getModMark3() const;
 		void toString() const;
+		void addModule(std::string t, std::string c, int cp, int m);
+		void updateModule(std::string c, Module m);
+		void updateModule(std::string c, int mark);
+		void updateModule(std::string c, int creditPoints);
+		void updateModule(std::string c, std::string t);
+		void deleteModule(std::string c);
 		std::string caluclateClassification() const;
 
 	private:
@@ -40,7 +42,5 @@ class Student {
 		std::string regID_;
 		std::string course_;
 		int year_;
-		int modMark1_;
-		int modMark2_;
-		int modMark3_;
+		std::vector<Module> moduleMarks_;
 };
