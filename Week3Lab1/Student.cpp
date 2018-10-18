@@ -85,6 +85,33 @@ void Student::updateModule(std::string c, Module m) {
 			moduleMarks_[i] = m;
 		}
 	}
+}
+
+void Student::updateModule(std::string c, int mark) {
+
+	for (int i = 0; i < moduleMarks_.size(); i++) {
+		if (c == moduleMarks_[i].getCode()) {
+			moduleMarks_[i].setMark(mark);
+		}
+	}
+}
+
+void Student::updateModule(std::string c, int creditPoints) {
+
+	for (int i = 0; i < moduleMarks_.size(); i++) {
+		if (c == moduleMarks_[i].getCode()) {
+			moduleMarks_[i].setCreditPoints(creditPoints);
+		}
+	}
+}
+
+void Student::updateModule(std::string c, std::string t) {
+
+	for (int i = 0; i < moduleMarks_.size(); i++) {
+		if (c == moduleMarks_[i].getCode()) {
+			moduleMarks_[i].setTitle(t);
+		}
+	}
 
 }
 
